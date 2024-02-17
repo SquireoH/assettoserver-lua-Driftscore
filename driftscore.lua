@@ -71,8 +71,8 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
 
-    if ac.getCarState(1, SlipAngle) > 1 then
-        totalScore = totalScore + math.ceil(10 * comboMeter)
+    if ac.getCarState(1, WheelAngularSpeed) > 1 then
+        totalScore = totalScore + 10
     end
 
     if player.speedKmh < requiredSpeed then
