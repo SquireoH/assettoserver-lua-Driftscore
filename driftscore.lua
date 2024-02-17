@@ -1,5 +1,47 @@
+Skip to content
+ 
+Search…
+All gists
+Back to GitHub
+@SquireoH
+SquireoH/overtake.lua Secret
+Last active 3 weeks ago
+Code
+Revisions
+36
+Clone this repository at &lt;script src=&quot;https://gist.github.com/SquireoH/1831c71696c88eb8444ac2cbf8f97e68.js&quot;&gt;&lt;/script&gt;
+<script src="https://gist.github.com/SquireoH/1831c71696c88eb8444ac2cbf8f97e68.js"></script>
+Overtake script mod
+overtake.lua
+-- Whole thing is still at very early stage of development, a lot might and possibly
+-- will change. Currently whole thing is limited to sort of original drifting mode
+-- level. Observe things that happen, draw some extra UI, score user,
+-- decide when session ends.
+
+-- This mode in particular is meant for Track Day with AI Flood on large tracks. Set
+-- AIs to draw some slow cars, get yourself that Red Bull monstrousity and try to
+-- score some points.
+
+-- Key points for future:
+-- • Integration with CM’s Quick Drive section, with settings and everything;
+-- • These modes might need to be able to force certain CSP parameters — here, for example,
+--   it should be AI flood parameters;
+-- • To ensure competitiveness, they might also need to collect some data, verify integrity
+--   and possibly record short replays?
+-- • Remote future: control scene, AIs, spawn extra geometry and so on.
+
 -- Event configuration:
-local requiredSpeed = 50
+local requiredSpeed = 80
+
+-- ScoreTrackerPlugin
+local msg = ac.OnlineEvent({
+    ac.StructItem.key("driftScoreEnd"),
+    Score = ac.StructItem.int64(),
+    Multiplier = ac.StructItem.int32(),
+    Car = ac.StructItem.string(64),
+})
+
+
 
 
 -- This function is called before event activates. Once it returns true, it’ll run:
@@ -18,6 +60,8 @@ local lastScore = 0
 local dangerouslySlowTimer = 0
 local carsState = {}
 local wheelsWarningTimeout = 0
+local topScore = 0
+local topScorePlayer = ""
 
 function script.update(dt)
     if timePassed == 0 then
@@ -62,6 +106,7 @@ function script.update(dt)
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
+                msg{ Score = personalBest, Multiplier = comboMeter, Car = ac.getCarName(0) }
             end
             if totalScore > 0 then
                 lastScore = totalScore
@@ -81,17 +126,63 @@ function script.update(dt)
         dangerouslySlowTimer = 0
     end
 
-    
-    
-    
-    if state.drivingAlong then
-        local posDir = (car.pos - player.pos):normalize()
-        local posDot = math.dot(posDir, car.look)
-        state.maxPosDot = math.max(state.maxPosDot, posDot)
-        totalScore = totalScore + math.ceil(10 * comboMeter)                    
-        comboMeter = comboMeter + 1
-        comboColor = comboColor + 90
-        addMessage("Drifting", comboMeter > 20 and 1 or 0)
+    for i = 1, ac.getSimState().carsCount do
+        local car = ac.getCarState(i)
+        local state = carsState[i]
+
+        if car.pos:closerToThan(player.pos, 10) then
+            local drivingAlong = math.dot(car.look, player.look) > 0.2
+            if not drivingAlong then
+                state.drivingAlong = false
+
+                if not state.nearMiss and car.pos:closerToThan(player.pos, 3) then
+                    state.nearMiss = true
+
+                    if car.pos:closerToThan(player.pos, 2.5) then
+                        comboMeter = comboMeter + 3
+                        addMessage("Very close near miss!", 1)
+                    else
+                        comboMeter = comboMeter + 1
+                        addMessage("Near miss: bonus combo", 0)
+                    end
+                end
+            end
+
+            if car.collidedWith == 0 then
+                addMessage("Collision", -1)
+                state.collided = true
+                --Only reseting combo on collision
+                --if totalScore > highestScore then
+                --    highestScore = math.floor(totalScore)                    
+                --    ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
+                --end
+                --if totalScore > 10 then --Set to 10 for now so that it doesnt register when collision and overtake happen at the same time.
+                    --lastScore = totalScore
+                --end
+
+                --totalScore = 0
+                comboMeter = 1
+            end
+
+            if not state.overtaken and not state.collided and state.drivingAlong then
+                local posDir = (car.pos - player.pos):normalize()
+                local posDot = math.dot(posDir, car.look)
+                state.maxPosDot = math.max(state.maxPosDot, posDot)
+                if posDot < -0.5 and state.maxPosDot > 0.5 then
+                    totalScore = totalScore + math.ceil(10 * comboMeter)                    
+                    comboMeter = comboMeter + 1
+                    comboColor = comboColor + 90
+                    addMessage("Overtake", comboMeter > 20 and 1 or 0)
+                    state.overtaken = true
+                end
+            end
+        else
+            state.maxPosDot = -1
+            state.overtaken = false
+            state.collided = false
+            state.drivingAlong = true
+            state.nearMiss = false
+        end
     end
 end
 
@@ -234,3 +325,19 @@ local speedWarning = 0
 
         ui.endTransparentWindow()
     end
+@SquireoH
+Comment
+ 
+Leave a comment
+ 
+Footer
+© 2024 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact
+Manage cookies
+Do not share my personal information
