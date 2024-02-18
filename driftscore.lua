@@ -1,19 +1,4 @@
--- Whole thing is still at very early stage of development, a lot might and possibly
--- will change. Currently whole thing is limited to sort of original drifting mode
--- level. Observe things that happen, draw some extra UI, score user,
--- decide when session ends.
-
--- This mode in particular is meant for Track Day with AI Flood on large tracks. Set
--- AIs to draw some slow cars, get yourself that Red Bull monstrousity and try to
--- score some points.
-
--- Key points for future:
--- • Integration with CM’s Quick Drive section, with settings and everything;
--- • These modes might need to be able to force certain CSP parameters — here, for example,
---   it should be AI flood parameters;
--- • To ensure competitiveness, they might also need to collect some data, verify integrity
---   and possibly record short replays?
--- • Remote future: control scene, AIs, spawn extra geometry and so on.
+-- Trying to change this back into a Drift script
 
 -- Event configuration:
 local requiredSpeed = 40
