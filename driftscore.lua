@@ -70,7 +70,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if player.slipAngle > 1 then
+    if player.tyreSlip then
         totalScore = totalScore + 1
     end
     
