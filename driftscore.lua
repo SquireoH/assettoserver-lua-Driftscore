@@ -17,7 +17,7 @@ local msg = ac.OnlineEvent({
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 60
+    return ac.getCarState(1).speedKmh > 50
 end
 
 -- Event state:
