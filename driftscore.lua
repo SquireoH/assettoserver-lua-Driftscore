@@ -1,7 +1,7 @@
 -- Trying to change this back into a Drift script
 
 -- Event configuration:
-local requiredSpeed = 60
+local requiredSpeed = 50
 
 -- ScoreTrackerPlugin
 local msg = ac.OnlineEvent({
