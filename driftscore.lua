@@ -70,7 +70,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if player.speedKmh > requiredSpeed then
+    if player.localAngularVelocity > 1 then
         totalScore = totalScore + 1
     end
     
