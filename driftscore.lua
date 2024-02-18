@@ -70,8 +70,9 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if player.localAngularVelocity > 1 then
+    if player.slipAngle > 1 then
         totalScore = totalScore + 1
+        ac.sendChatMessage("SlipAngle: " player.slipAngle )
     end
     
     if player.speedKmh < requiredSpeed then
