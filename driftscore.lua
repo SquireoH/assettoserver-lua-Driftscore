@@ -1,7 +1,22 @@
---Changing this back into a drift script.
+-- Whole thing is still at very early stage of development, a lot might and possibly
+-- will change. Currently whole thing is limited to sort of original drifting mode
+-- level. Observe things that happen, draw some extra UI, score user,
+-- decide when session ends.
+
+-- This mode in particular is meant for Track Day with AI Flood on large tracks. Set
+-- AIs to draw some slow cars, get yourself that Red Bull monstrousity and try to
+-- score some points.
+
+-- Key points for future:
+-- • Integration with CM’s Quick Drive section, with settings and everything;
+-- • These modes might need to be able to force certain CSP parameters — here, for example,
+--   it should be AI flood parameters;
+-- • To ensure competitiveness, they might also need to collect some data, verify integrity
+--   and possibly record short replays?
+-- • Remote future: control scene, AIs, spawn extra geometry and so on.
 
 -- Event configuration:
-local requiredSpeed = 40
+local requiredSpeed = 80
 
 -- ScoreTrackerPlugin
 local msg = ac.OnlineEvent({
@@ -17,7 +32,7 @@ local msg = ac.OnlineEvent({
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 40
+    return ac.getCarState(1).speedKmh > 60
 end
 
 -- Event state:
@@ -69,10 +84,6 @@ function script.update(dt)
         end
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
-    end
-
-    if ac.getCarState(1, WheelAngularSpeed) > 1 then
-        totalScore = totalScore + 10
     end
 
     if player.speedKmh < requiredSpeed then
