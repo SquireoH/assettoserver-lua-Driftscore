@@ -1,7 +1,7 @@
 -- Trying to change this back into a Drift script
 
 -- Event configuration:
-local requiredSpeed = 40
+local requiredSpeed = 60
 
 -- ScoreTrackerPlugin
 local msg = ac.OnlineEvent({
@@ -17,7 +17,7 @@ local msg = ac.OnlineEvent({
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 40
+    return ac.getCarState(1).speedKmh > 60
 end
 
 -- Event state:
@@ -70,12 +70,12 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if player.tyreSlip then
+    if player.speedKmh > requiredSpeed then
         totalScore = totalScore + 1
     end
     
     if player.speedKmh < requiredSpeed then
-        if dangerouslySlowTimer > 3 then
+        if dangerouslySlowTimer > 5 then
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
