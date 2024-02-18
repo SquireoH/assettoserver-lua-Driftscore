@@ -72,7 +72,6 @@ function script.update(dt)
     end
     if player.slipAngle > 1 then
         totalScore = totalScore + 1
-        ac.sendChatMessage("SlipAngle: " player.slipAngle )
     end
     
     if player.speedKmh < requiredSpeed then
