@@ -85,7 +85,10 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-
+    if player.speedKmh > requiredSpeed then
+        totalScore = totalScore + 10
+    end
+    
     if player.speedKmh < requiredSpeed then
         if dangerouslySlowTimer > 3 then
             if totalScore > highestScore then
