@@ -16,7 +16,7 @@
 -- • Remote future: control scene, AIs, spawn extra geometry and so on.
 
 -- Event configuration:
-local requiredSpeed = 80
+local requiredSpeed = 40
 
 -- ScoreTrackerPlugin
 local msg = ac.OnlineEvent({
@@ -32,7 +32,7 @@ local msg = ac.OnlineEvent({
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 60
+    return ac.getCarState(1).speedKmh > 40
 end
 
 -- Event state:
@@ -86,7 +86,7 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
     if player.speedKmh > requiredSpeed then
-        totalScore = totalScore + 10
+        totalScore = totalScore + 1
     end
     
     if player.speedKmh < requiredSpeed then
