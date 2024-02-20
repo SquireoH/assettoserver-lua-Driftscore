@@ -38,7 +38,11 @@ function script.update(dt)
         addMessage("Let’s go!", 0)
     end
 
-    local player = ac.getCarState(1)
+    --local player = ac.getCarState(1)
+    local player = ac.getCar(0)
+    if not player then
+        return
+    end
     if player.engineLifeLeft < 1 then
         if totalScore > highestScore then
             highestScore = math.floor(totalScore)            
@@ -72,6 +76,9 @@ function script.update(dt)
     end
     if player.speedKmh > requiredSpeed then
         totalScore = totalScore + 1
+        if player.slipAngle > 0 or player.slipAngle < 0 then
+            comboMeter = comboMeter + 1
+        end
     end
     
     if player.speedKmh < requiredSpeed then
