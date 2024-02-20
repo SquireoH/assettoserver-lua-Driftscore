@@ -45,8 +45,8 @@ function script.update(dt)
     if not player then
         return
     end
-    local sliding = player.localVelocity.x / math.max(3, player.speedMs)
-    local slidingMult = math.abs(sliding) * 10
+    sliding = player.localVelocity.x / math.max(3, player.speedMs)
+    slidingMult = math.abs(sliding) * 10
     if player.engineLifeLeft < 1 then
         if totalScore > highestScore then
             highestScore = math.floor(totalScore)            
