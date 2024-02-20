@@ -218,8 +218,8 @@ local speedWarning = 0
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
         ui.pushFont(ui.Font.Main)
-        ui.text("Highest Score: " .. slidingMult .. " pts")
-        ui.text("Last Score: " .. sliding .. " pts")
+        ui.text("Highest Score: " .. math.floor(slidingMult) .. " pts")
+        ui.text("Last Score: " .. math.floor(sliding) .. " pts")
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
         
