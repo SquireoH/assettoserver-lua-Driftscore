@@ -39,7 +39,8 @@ function script.update(dt)
         addMessage("Let’s go!", 0)
     end
 
-    --local player = ac.getCarState(1)
+    
+    local test = ac.getTrackUpcomingTurn(0)
     local player = ac.getCar(0)
     if not player then
         return
