@@ -75,8 +75,8 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
     if player.speedKmh > requiredSpeed then
-        totalScore = totalScore + 1
-        if math.abs(player.localAngularVelocity.y) > 0 then
+        totalScore = totalScore + 0.1
+        if math.abs(player.slipAngle.y) > 0 then
             comboMeter = comboMeter + 1
         end
     end
