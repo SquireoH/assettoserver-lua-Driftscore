@@ -79,7 +79,7 @@ function script.update(dt)
     if math.abs(player.localAngularVelocity.y) > 0.4 then
         totalScore = totalScore + (1 * comboMeter)
         if player.speedKmh > 50 then
-            comboProgress = comboProgress + 0.005
+            comboProgress = comboProgress + 0.01
             comboMeter = math.floor(comboProgress)
         end
     end
