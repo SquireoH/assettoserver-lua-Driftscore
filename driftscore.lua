@@ -77,7 +77,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if slidingMult > 10 then
+    if slidingMult > 0 then
     --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
         totalScore = totalScore + (1 * comboMeter)
         if player.speedKmh > 60 then
