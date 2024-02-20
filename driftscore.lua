@@ -17,7 +17,7 @@ local msg = ac.OnlineEvent({
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 40
+    return ac.getCarState(1).speedKmh > 45
 end
 
 -- Event state:
@@ -45,21 +45,6 @@ function script.update(dt)
     if not player then
         return
     end
-    sliding = player.localVelocity.x / math.max(3, player.speedMs)
-    slidingMult = math.abs(sliding) * 10
-    --if player.engineLifeLeft < 1 then
-        --if totalScore > highestScore then
-            --highestScore = math.floor(totalScore)            
-            --ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
-        --end
-        --if totalScore > 0 then
-            --lastScore = totalScore
-        --end
-        --totalScore = 0
-        --comboMeter = 1
-        --return
-    --end
-
     timePassed = timePassed + dt
 
     local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside
@@ -79,7 +64,11 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if slidingMult > 1 then
+    
+--Is car Drifting/Sliding?
+    sliding = player.localVelocity.x / math.max(3, player.speedMs)
+    slidingMult = math.abs(sliding) * 10
+    if player.speedKmh > requiredSpeed and slidingMult > 1 then
     --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
         totalScore = totalScore + (slidingMult * comboMeter)
         if player.speedKmh > 60 then
@@ -88,7 +77,7 @@ function script.update(dt)
         end
     end
     
-    if player.speedKmh < requiredSpeed then
+    if player.speedKmh < requiredSpeed and slidingMult < 1 then
         if dangerouslySlowTimer > 5 then
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
@@ -116,8 +105,7 @@ function script.update(dt)
 
 end
 
--- For various reasons, this is the most questionable part, some UI. I don’t really like
--- this way though. So, yeah, still thinking about the best way to do it.
+--Using a modified Overtake UI for now
 local messages = {}
 local glitter = {}
 local glitterCount = 0
