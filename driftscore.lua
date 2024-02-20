@@ -17,7 +17,7 @@ local msg = ac.OnlineEvent({
 -- This function is called before event activates. Once it returns true, it’ll run:
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 50
+    return ac.getCarState(1).speedKmh > 40
 end
 
 -- Event state:
@@ -74,9 +74,10 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if player.speedKmh > requiredSpeed then
+    if math.abs(player.localAngularVelocity.y) > 0.2 then
+    --if player.speedKmh > requiredSpeed then
         totalScore = totalScore + 1
-        if math.abs(player.localAngularVelocity.y) > 0.2 then
+        if player.speedKmh > 50 then
             comboMeter = comboMeter + 0.1
         end
     end
@@ -265,7 +266,7 @@ local speedWarning = 0
         ui.text(totalScore .. " pts")
         ui.sameLine(0, 20)
         ui.beginRotation()
-        ui.textColored(math.floor(comboMeter * 10) / 10 .. "x", colorCombo)
+        ui.textColored(math.floor(comboMeter) .. "x", colorCombo)
         if comboMeter > 20 then
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
