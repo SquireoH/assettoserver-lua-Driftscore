@@ -81,7 +81,7 @@ function script.update(dt)
     end
     if slidingMult > 1 then
     --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
-        totalScore = totalScore + (slidingMult * comboMeter)
+        totalScore = math.floor(totalScore + (slidingMult * comboMeter))
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.01
             comboMeter = math.floor(comboProgress)
