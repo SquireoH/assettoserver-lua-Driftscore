@@ -216,8 +216,11 @@ local speedWarning = 0
         end
     
         ui.pushFont(ui.Font.Main)
-        ui.text("Highest Score: " .. highestScore .. " pts")
+        -- ui.text("Highest Score: " .. highestScore .. " pts")
+        -- ui.text("Last Score: " .. lastScore .. " pts")
+        ui.text("Highest Score: " .. ac.getTrackUpcomingTurn(0) .. " pts")
         ui.text("Last Score: " .. lastScore .. " pts")
+
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
         
