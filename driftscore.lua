@@ -100,7 +100,7 @@ function script.update(dt)
             end
         end
         dangerouslySlowTimer = dangerouslySlowTimer + dt
-        comboMeter = 1
+        --comboMeter = 1
         return
     else
         dangerouslySlowTimer = 0
