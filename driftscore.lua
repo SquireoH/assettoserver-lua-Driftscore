@@ -79,9 +79,9 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if slidingMult > 2 then
+    if slidingMult > 1 then
     --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
-        totalScore = totalScore + (1 * comboMeter)
+        totalScore = totalScore + (slidingMult * comboMeter)
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.01
             comboMeter = math.floor(comboProgress)
@@ -220,7 +220,7 @@ local speedWarning = 0
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
         ui.pushFont(ui.Font.Main)
-        ui.text("Highest Score: " .. math.floor(slidingMult) .. " pts")
+        ui.text("Highest Score: " .. highestScore .. " pts")
         ui.text("Last Score: " .. lastScore .. " pts")
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
