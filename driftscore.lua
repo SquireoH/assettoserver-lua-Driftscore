@@ -75,7 +75,7 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
     
-    if math.abs(player.LocalAngularVelocity.y) > 0.4 then
+    if math.abs(player.localAngularVelocity.y) > 0.4 then
         totalScore = totalScore + 1
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.001
