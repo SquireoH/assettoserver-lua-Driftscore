@@ -24,6 +24,7 @@ end
 local timePassed = 0
 local totalScore = 0
 local comboMeter = 1
+local comboProgress = 1
 local comboColor = 0
 local highestScore = 0
 local lastScore = 0
@@ -74,11 +75,12 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if math.abs(player.localAngularVelocity.y) > 0.5 then
+    if math.abs(player.slipAngle.y) > 10 then
     --if player.speedKmh > requiredSpeed then
         totalScore = totalScore + 1
         if player.speedKmh > 50 then
-            comboMeter = comboMeter + 0.5
+            comboProgress = comboProgress + 0.1
+            comboMeter = math.floor(comboProgress)
         end
     end
     
@@ -95,6 +97,7 @@ function script.update(dt)
 
             totalScore = 0
             comboMeter = 1
+            comboProgress = 1
         else
             if dangerouslySlowTimer == 0 then
                 addMessage("Too slow!", -1)
