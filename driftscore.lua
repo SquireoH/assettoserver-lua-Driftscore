@@ -75,7 +75,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if math.abs(player.localVelocity.x) > 0.1 then
+    if math.abs(player.wheelAngularSpeed.y) > 0.5 then
         totalScore = totalScore + 1
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.001
