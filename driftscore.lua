@@ -81,7 +81,7 @@ function script.update(dt)
         if dangerouslySlowTimer > 5 then
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
-                ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
+                ac.sendChatMessage("scored a new personal best: " .. math.floor(totalScore) .. " points.")
                 msg{ Score = personalBest, Multiplier = comboMeter, Car = ac.getCarName(0) }
             end
             if totalScore > 0 then
