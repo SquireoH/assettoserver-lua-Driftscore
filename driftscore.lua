@@ -75,8 +75,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    --if math.abs(player.slipAngle) > 10 then
-    if player.wheels[2].slipAngle > 10 and player.wheels[3].slipAngle > 10 then
+    if math.abs(player.slipAngle) > 10 then
         totalScore = totalScore + 1
         if player.speedKmh > 50 then
             comboProgress = comboProgress + 0.1
@@ -110,64 +109,6 @@ function script.update(dt)
         dangerouslySlowTimer = 0
     end
 
-    for i = 1, ac.getSimState().carsCount do
-        local car = ac.getCarState(i)
-        local state = carsState[i]
-
-        if car.pos:closerToThan(player.pos, 10) then
-            local drivingAlong = math.dot(car.look, player.look) > 0.2
-            if not drivingAlong then
-                state.drivingAlong = false
-
-                if not state.nearMiss and car.pos:closerToThan(player.pos, 3) then
-                    state.nearMiss = true
-
-                    if car.pos:closerToThan(player.pos, 2.5) then
-                        comboMeter = comboMeter + 3
-                        addMessage("Very close near miss!", 1)
-                    else
-                        comboMeter = comboMeter + 1
-                        addMessage("Near miss: bonus combo", 0)
-                    end
-                end
-            end
-
-            if car.collidedWith == 0 then
-                addMessage("Collision", -1)
-                state.collided = true
-                --Only reseting combo on collision
-                --if totalScore > highestScore then
-                --    highestScore = math.floor(totalScore)                    
-                --    ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
-                --end
-                --if totalScore > 10 then --Set to 10 for now so that it doesnt register when collision and overtake happen at the same time.
-                    --lastScore = totalScore
-                --end
-
-                --totalScore = 0
-                comboMeter = 1
-            end
-
-            if not state.overtaken and not state.collided and state.drivingAlong then
-                local posDir = (car.pos - player.pos):normalize()
-                local posDot = math.dot(posDir, car.look)
-                state.maxPosDot = math.max(state.maxPosDot, posDot)
-                if posDot < -0.5 and state.maxPosDot > 0.5 then
-                    totalScore = totalScore + math.ceil(10 * comboMeter)                    
-                    comboMeter = comboMeter + 1
-                    comboColor = comboColor + 90
-                    addMessage("Overtake", comboMeter > 20 and 1 or 0)
-                    state.overtaken = true
-                end
-            end
-        else
-            state.maxPosDot = -1
-            state.overtaken = false
-            state.collided = false
-            state.drivingAlong = true
-            state.nearMiss = false
-        end
-    end
 end
 
 -- For various reasons, this is the most questionable part, some UI. I don’t really like
