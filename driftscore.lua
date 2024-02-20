@@ -76,7 +76,7 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
     --if math.abs(player.slipAngle) > 10 then
-    if player.wheels[2].slipAngle > 10 and player.wheels[3].slipAngle > 10
+    if player.wheels[2].slipAngle > 10 and player.wheels[3].slipAngle > 10 then
         totalScore = totalScore + 1
         if player.speedKmh > 50 then
             comboProgress = comboProgress + 0.1
