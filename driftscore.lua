@@ -1,7 +1,7 @@
 -- Trying to change this back into a Drift script
 
 -- Event configuration:
-local requiredSpeed = 50
+local requiredSpeed = 40
 
 -- ScoreTrackerPlugin
 local msg = ac.OnlineEvent({
@@ -75,9 +75,9 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
     if player.speedKmh > requiredSpeed then
-        totalScore = totalScore + 0.1
+        totalScore = totalScore + 1
         if math.abs(player.localAngularVelocity.y) > 0.5 then
-            comboMeter = comboMeter + 1
+            comboMeter = Math.ceil(comboMeter + 0.05)
         end
     end
     
