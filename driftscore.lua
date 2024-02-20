@@ -60,6 +60,7 @@ function script.update(dt)
 
     local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside
     comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
+    comboMeter = math.floor(comboProgress)
 
     local sim = ac.getSimState()
     while sim.carsCount > #carsState do
@@ -77,7 +78,7 @@ function script.update(dt)
     
     if math.abs(player.localAngularVelocity.y) > 0.4 then
         totalScore = totalScore + (1 * comboMeter)
-        if player.speedKmh > 60 then
+        if player.speedKmh > 50 then
             comboProgress = comboProgress + 0.005
             comboMeter = math.floor(comboProgress)
         end
