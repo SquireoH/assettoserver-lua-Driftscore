@@ -33,6 +33,8 @@ local carsState = {}
 local wheelsWarningTimeout = 0
 local topScore = 0
 local topScorePlayer = ""
+local sliding = 0
+local slidingMult = 0
 
 function script.update(dt)
     if timePassed == 0 then
