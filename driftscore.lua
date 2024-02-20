@@ -1,4 +1,7 @@
--- Trying to change this back into a Drift script
+-- Simple drift script using some of the overtake script functions and UI.
+-- The more you slide the more points you make.
+-- The faster you go, faster the combo multiplier goes up.
+-- Drift run ends if you stay under the required speed and are not sliding. 
 
 -- Event configuration:
 local requiredSpeed = 45
@@ -14,7 +17,7 @@ local msg = ac.OnlineEvent({
 
 
 
--- This function is called before event activates. Once it returns true, it’ll run:
+-- Function to start the timer(prepare(dt), once speed is reached.
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
     return ac.getCarState(1).speedKmh > 45
@@ -24,6 +27,7 @@ end
 local timePassed = 0
 local totalScore = 0
 local comboMeter = 1
+local highestCombo = 1
 local comboProgress = 1
 local comboColor = 0
 local highestScore = 0
@@ -74,6 +78,9 @@ function script.update(dt)
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.01
             comboMeter = math.floor(comboProgress)
+            if comboMeter > highestCombo then
+                highestCombo = combo
+            end
         end
     end
     
@@ -82,7 +89,7 @@ function script.update(dt)
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. math.floor(totalScore) .. " points.")
-                msg{ Score = personalBest, Multiplier = comboMeter, Car = ac.getCarName(0) }
+                msg{ Score = totalScore, Multiplier = comboMeter, Car = ac.getCarName(0) }
             end
             if totalScore > 0 then
                 lastScore = math.floor(totalScore)
