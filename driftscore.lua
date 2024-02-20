@@ -44,6 +44,7 @@ function script.update(dt)
         return
     end
     local sliding = math.abs(player.localVelocity.x / math.max(3, player.speedMs))
+    local slidingMult = math.abs(sliding) * 10
     if player.engineLifeLeft < 1 then
         if totalScore > highestScore then
             highestScore = math.floor(totalScore)            
@@ -76,7 +77,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if sliding > 10 then
+    if slidingMult > 10 then
     --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
         totalScore = totalScore + (1 * comboMeter)
         if player.speedKmh > 60 then
