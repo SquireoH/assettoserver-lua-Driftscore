@@ -40,7 +40,6 @@ function script.update(dt)
     end
 
     
-    local test = ac.getTrackUpcomingTurn(0)
     local player = ac.getCar(0)
     if not player then
         return
@@ -218,7 +217,6 @@ local speedWarning = 0
         ui.pushFont(ui.Font.Main)
         ui.text("Highest Score: " .. highestScore .. " pts")
         ui.text("Last Score: " .. lastScore .. " pts")
-        ui.text("Test: " .. test .. " pts")
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
         
