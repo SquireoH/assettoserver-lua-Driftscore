@@ -47,18 +47,18 @@ function script.update(dt)
     end
     sliding = player.localVelocity.x / math.max(3, player.speedMs)
     slidingMult = math.abs(sliding) * 10
-    if player.engineLifeLeft < 1 then
-        if totalScore > highestScore then
-            highestScore = math.floor(totalScore)            
-            ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
-        end
-        if totalScore > 0 then
-            lastScore = totalScore
-        end
-        totalScore = 0
-        comboMeter = 1
-        return
-    end
+    --if player.engineLifeLeft < 1 then
+        --if totalScore > highestScore then
+            --highestScore = math.floor(totalScore)            
+            --ac.sendChatMessage("scored a new personal best: " .. totalScore .. " points.")
+        --end
+        --if totalScore > 0 then
+            --lastScore = totalScore
+        --end
+        --totalScore = 0
+        --comboMeter = 1
+        --return
+    --end
 
     timePassed = timePassed + dt
 
