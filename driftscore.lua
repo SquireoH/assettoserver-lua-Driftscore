@@ -76,8 +76,8 @@ function script.update(dt)
     end
     if player.speedKmh > requiredSpeed then
         totalScore = totalScore + 1
-        if math.abs(player.localAngularVelocity.y) > 0.5 then
-            comboMeter = Math.ceil(comboMeter + 0.05)
+        if math.abs(player.localAngularVelocity.y) > 0.2 then
+            comboMeter = comboMeter + 0.1
         end
     end
     
@@ -265,7 +265,7 @@ local speedWarning = 0
         ui.text(totalScore .. " pts")
         ui.sameLine(0, 20)
         ui.beginRotation()
-        ui.textColored(math.ceil(comboMeter * 10) / 10 .. "x", colorCombo)
+        ui.textColored(math.floor(comboMeter * 10) / 10 .. "x", colorCombo)
         if comboMeter > 20 then
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
