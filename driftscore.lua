@@ -81,7 +81,7 @@ function script.update(dt)
     end
     if slidingMult > 1 then
     --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
-        totalScore = math.floor(totalScore + (slidingMult * comboMeter))
+        totalScore = totalScore + (slidingMult * comboMeter)
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.01
             comboMeter = math.floor(comboProgress)
@@ -96,7 +96,7 @@ function script.update(dt)
                 msg{ Score = personalBest, Multiplier = comboMeter, Car = ac.getCarName(0) }
             end
             if totalScore > 0 then
-                lastScore = totalScore
+                lastScore = math.floor(totalScore)
             end
 
             totalScore = 0
@@ -212,7 +212,7 @@ local speedWarning = 0
         ui.popStyleVar()
         ui.pushFont(ui.Font.Title)
         ui.offsetCursorY(20)
-        ui.text(totalScore .. " pts")
+        ui.text(math.floor(totalScore) .. " pts")
         ui.sameLine(0, 20)
         ui.beginRotation()
         ui.textColored(math.floor(comboMeter) .. "x", colorCombo)
