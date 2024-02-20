@@ -38,7 +38,6 @@ function script.update(dt)
     if timePassed == 0 then
         addMessage("Let’s go!", 0)
     end
-
     
     local player = ac.getCar(0)
     if not player then
@@ -75,7 +74,8 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if math.abs(player.wheelAngularSpeed.y) > 0.5 then
+    
+    if math.abs(player.LocalAngularVelocity.y) > 0.4 then
         totalScore = totalScore + 1
         if player.speedKmh > 60 then
             comboProgress = comboProgress + 0.001
