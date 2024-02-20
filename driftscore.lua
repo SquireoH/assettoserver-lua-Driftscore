@@ -214,7 +214,6 @@ local speedWarning = 0
         if comboMeter > 20 then
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
-        local test = math.abs(ac.getTrackUpcomingTurn(0))
         ui.pushFont(ui.Font.Main)
         ui.text("Highest Score: " .. highestScore .. " pts")
         ui.text("Last Score: " .. lastScore .. " pts")
