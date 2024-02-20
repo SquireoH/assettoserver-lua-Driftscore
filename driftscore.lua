@@ -51,7 +51,8 @@ function script.update(dt)
     end
     timePassed = timePassed + dt
 
-    local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside
+    --local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside
+    local comboFadingRate = 0.5 + player.wheelOutside
     comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
     comboMeter = math.floor(comboProgress)
 
@@ -79,7 +80,7 @@ function script.update(dt)
             comboProgress = comboProgress + 0.01
             comboMeter = math.floor(comboProgress)
             if comboMeter > highestCombo then
-                highestCombo = combo
+                highestCombo = comboMeter
             end
         end
     end
@@ -89,7 +90,7 @@ function script.update(dt)
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. math.floor(totalScore) .. " points.")
-                msg{ Score = totalScore, Multiplier = comboMeter, Car = ac.getCarName(0) }
+                msg{ Score = totalScore, Multiplier = highestCombo, Car = ac.getCarName(0) }
             end
             if totalScore > 0 then
                 lastScore = math.floor(totalScore)
