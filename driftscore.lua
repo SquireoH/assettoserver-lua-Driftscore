@@ -75,7 +75,7 @@ function script.update(dt)
         addMessage("Car is outside", -1)
         wheelsWarningTimeout = 60
     end
-    if math.abs(player.slipRatio) > 0.1 then
+    if math.abs(player.localAngularVelocity.y) > 0.4 then
         totalScore = totalScore + 1
         if player.speedKmh > 50 then
             comboProgress = comboProgress + 0.1
@@ -207,8 +207,7 @@ local speedWarning = 0
         ui.popStyleVar()
         ui.pushFont(ui.Font.Title)
         ui.offsetCursorY(20)
-        --ui.text(totalScore .. " pts")
-        ui.text(player.slipAngle .. " pts")
+        ui.text(totalScore .. " pts")
         ui.sameLine(0, 20)
         ui.beginRotation()
         ui.textColored(math.floor(comboMeter) .. "x", colorCombo)
