@@ -76,7 +76,7 @@ function script.update(dt)
     end
     if player.speedKmh > requiredSpeed then
         totalScore = totalScore + 0.1
-        if player.slipAngle.y > 20 then
+        if math.abs(player.slipAngle.y) > 0.5 then
             comboMeter = comboMeter + 1
         end
     end
