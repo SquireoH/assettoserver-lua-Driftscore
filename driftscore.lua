@@ -4,7 +4,7 @@
 -- Drift run ends if you stay under the required speed and are not sliding. 
 
 -- Event configuration:
-local requiredSpeed = 45
+local requiredSpeed = 40
 
 -- ScoreTrackerPlugin
 local msg = ac.OnlineEvent({
@@ -20,7 +20,7 @@ local msg = ac.OnlineEvent({
 -- Function to start the timer(prepare(dt), once speed is reached.
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 40
+    return ac.getCarState(1).speedKmh > 35
 end
 
 -- Event state:
@@ -72,15 +72,13 @@ function script.update(dt)
 -- Is car Drifting/Sliding?
     sliding = player.localVelocity.x / math.max(3, player.speedMs)
     slidingMult = math.abs(sliding) * 10
-    if player.speedKmh > requiredSpeed and slidingMult > 1 then
-    --if math.abs(player.localAngularVelocity.y) + math.abs(player.localAngularVelocity.x) > 0.4 then
-        totalScore = totalScore + (slidingMult * comboMeter)
-        if player.speedKmh > 60 then
-            comboProgress = comboProgress + 0.01
-            comboMeter = math.floor(comboProgress)
-            if comboMeter > highestCombo then
-                highestCombo = comboMeter
-            end
+    
+    if player.speedKmh > requiredSpeed and slidingMult > 1 then    
+        totalScore = totalScore + (slidingMult * comboMeter)        
+        comboProgress = comboProgress + (player.speedKmh / 5000)
+        comboMeter = math.floor(comboProgress)
+        if comboMeter > highestCombo then
+            highestCombo = comboMeter
         end
     end
     
@@ -215,8 +213,8 @@ local speedWarning = 0
             ui.endRotation(math.sin(comboMeter / 180 * 3141.5) * 3 * math.lerpInvSat(comboMeter, 20, 30) + 90)
         end
         ui.pushFont(ui.Font.Main)
-        ui.text("Highest Score: " .. highestScore .. " pts")
-        ui.text("Last Score: " .. lastScore .. " pts")
+        ui.text("HighScore: " .. highestScore .. " pts")
+        ui.text("Last Run: " .. lastScore .. " pts")
         ui.popFont()
         ui.endOutline(rgbm(0, 0, 0, 0.3))
         
