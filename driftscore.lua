@@ -25,6 +25,7 @@ end
 
 -- Event state:
 local timePassed = 0
+local driftPoints = 0
 local totalScore = 0
 local comboMeter = 1
 local highestCombo = 1
@@ -73,8 +74,9 @@ function script.update(dt)
     sliding = player.localVelocity.x / math.max(3, player.speedMs)
     slidingMult = math.abs(sliding) * 10
     
-    if player.speedKmh > requiredSpeed and slidingMult > 1 then    
-        totalScore = totalScore + (slidingMult * 0.05 * comboMeter)        
+    if player.speedKmh > requiredSpeed and slidingMult > 1 then
+        driftPoints = slidingMult * 0.05
+        totalScore = totalScore + (driftPoints * comboMeter)        
         comboProgress = comboProgress + (player.speedKmh * 0.00005)
         comboMeter = math.floor(comboProgress)
         if comboMeter > highestCombo then
