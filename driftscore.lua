@@ -199,7 +199,7 @@ local speedWarning = 0
             end
         end
 -- Changed Window position so that it is closer to the middle when using Triple screens. Need to figure a way to grab current resolution for better universal placement
-        ui.toolWindow("driftScore", vec2(1700, 100), vec2(1900, 400))
+        ui.transparentWindow("driftScore", vec2(1700, 100), vec2(1900, 400))
         ui.beginOutline()
 
         ui.pushStyleVar(ui.StyleVar.Alpha, 1 - speedWarning)
