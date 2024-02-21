@@ -75,7 +75,7 @@ function script.update(dt)
     
     if player.speedKmh > requiredSpeed and slidingMult > 1 then    
         totalScore = totalScore + (slidingMult * comboMeter)        
-        comboProgress = comboProgress + (player.speedKmh / 5000)
+        comboProgress = comboProgress + (player.speedKmh / 50000)
         comboMeter = math.floor(comboProgress)
         if comboMeter > highestCombo then
             highestCombo = comboMeter
