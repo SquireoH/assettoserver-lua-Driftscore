@@ -1,4 +1,4 @@
--- Simple drift script using some of the overtake script functions and UI.
+-- Simple drift script using some of the overtake script UI.
 -- The more you slide the more points you make.
 -- The faster you go, faster the combo multiplier goes up.
 -- Drift run ends if you stay under the required speed and are not sliding. 
@@ -17,7 +17,7 @@ local msg = ac.OnlineEvent({
 
 
 
--- Function to start the timer(prepare(dt), once speed is reached.
+-- Function to start the timer prepare(dt), once speed is reached.
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
     return ac.getCarState(1).speedKmh > 35
@@ -51,16 +51,16 @@ function script.update(dt)
         return
     end
     timePassed = timePassed + dt
-
+-- Activate or disable combo fading
     --local comboFadingRate = 0.4 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside    
     --comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
     --comboMeter = math.floor(comboProgress)
-
+-- Get all other cars (Will be used for Tandem drifting bonus)
     local sim = ac.getSimState()
     while sim.carsCount > #carsState do
         carsState[#carsState + 1] = {}
     end
-
+-- Needed for combo fading or if you wanted to cancel the run while wheels are out
     if wheelsWarningTimeout > 0 then
         wheelsWarningTimeout = wheelsWarningTimeout - dt
     elseif player.wheelsOutside > 0 then
@@ -100,7 +100,7 @@ function script.update(dt)
             comboProgress = 1
         else
             if dangerouslySlowTimer == 0 then
-                addMessage("Too slow!", -1)
+                addMessage("Get Going!", -1)
             end
         end
         dangerouslySlowTimer = dangerouslySlowTimer + dt
@@ -199,7 +199,7 @@ local speedWarning = 0
             end
         end
 -- Changed Window position so that it is closer to the middle when using Triple screens. Need to figure a way to grab current resolution for better universal placement
-        ui.beginTransparentWindow("overtakeScore", vec2(1700, 100), vec2(1900, 400))
+        ui.toolWindow("driftScore", vec2(1700, 100), vec2(1900, 400))
         ui.beginOutline()
 
         ui.pushStyleVar(ui.StyleVar.Alpha, 1 - speedWarning)
@@ -247,5 +247,5 @@ local speedWarning = 0
         ui.popFont()
         ui.popStyleVar()
 
-        ui.endTransparentWindow()
+        --ui.endTransparentWindow()
     end
