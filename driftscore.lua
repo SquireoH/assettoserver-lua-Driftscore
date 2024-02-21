@@ -51,8 +51,7 @@ function script.update(dt)
     end
     timePassed = timePassed + dt
 
-    --local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside
-    local comboFadingRate = 0.5 + player.wheelsOutside
+    local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside    
     comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
     comboMeter = math.floor(comboProgress)
 
