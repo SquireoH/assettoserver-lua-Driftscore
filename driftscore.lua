@@ -20,7 +20,7 @@ local msg = ac.OnlineEvent({
 -- Function to start the timer(prepare(dt), once speed is reached.
 function script.prepare(dt)
     ac.debug("speed", ac.getCarState(1).speedKmh)
-    return ac.getCarState(1).speedKmh > 45
+    return ac.getCarState(1).speedKmh > 40
 end
 
 -- Event state:
@@ -51,7 +51,7 @@ function script.update(dt)
     end
     timePassed = timePassed + dt
 
-    local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside    
+    local comboFadingRate = 0.4 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside    
     comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
     comboMeter = math.floor(comboProgress)
 
