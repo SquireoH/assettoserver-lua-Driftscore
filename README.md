@@ -1,4 +1,4 @@
-# assettoserver lua Drift scoring script
+# assettoserver Drift scoring lua script
 Simple drift script using some of the overtake script UI.
 
 The more you slide the more points you make.
