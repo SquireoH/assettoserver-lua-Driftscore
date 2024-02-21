@@ -1,17 +1,17 @@
 # assettoserver lua Drift scoring script
--Simple drift script using some of the overtake script UI.
+Simple drift script using some of the overtake script UI.
 
--The more you slide the more points you make.
+The more you slide the more points you make.
 
--The faster you go, faster the combo multiplier goes up.
+The faster you go, faster the combo multiplier goes up.
 
--Drift run ends if you stay under the required speed and are not sliding.
+Drift run ends if you stay under the required speed and are not sliding.
 
 
 # Install
--Post the Raw in Pastebin and copy the URL of the Raw.
+- Post the Raw in Pastebin and copy the URL of the Raw.
 
--Add this line to your csp_extra_options.ini
+- Add this line to your csp_extra_options.ini
 
 
 ```
