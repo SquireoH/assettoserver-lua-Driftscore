@@ -52,7 +52,7 @@ function script.update(dt)
     timePassed = timePassed + dt
 
     --local comboFadingRate = 0.5 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside
-    local comboFadingRate = 0.5 + player.wheelOutside
+    local comboFadingRate = 0.5 + player.wheelsOutside
     comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
     comboMeter = math.floor(comboProgress)
 
@@ -70,7 +70,7 @@ function script.update(dt)
         wheelsWarningTimeout = 60
     end
     
---Is car Drifting/Sliding?
+-- Is car Drifting/Sliding?
     sliding = player.localVelocity.x / math.max(3, player.speedMs)
     slidingMult = math.abs(sliding) * 10
     if player.speedKmh > requiredSpeed and slidingMult > 1 then
