@@ -51,9 +51,9 @@ function script.update(dt)
     end
     timePassed = timePassed + dt
 
-    local comboFadingRate = 0.4 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside    
-    comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
-    comboMeter = math.floor(comboProgress)
+    --local comboFadingRate = 0.4 * math.lerp(1, 0.1, math.lerpInvSat(player.speedKmh, 80, 200)) + player.wheelsOutside    
+    --comboProgress = math.max(1, comboProgress - dt * comboFadingRate)
+    --comboMeter = math.floor(comboProgress)
 
     local sim = ac.getSimState()
     while sim.carsCount > #carsState do
@@ -85,7 +85,7 @@ function script.update(dt)
     end
     
     if player.speedKmh < requiredSpeed and slidingMult < 1 then
-        if dangerouslySlowTimer > 5 then
+        if dangerouslySlowTimer > 3 then
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. math.floor(totalScore) .. " points.")
