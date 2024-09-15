@@ -7,12 +7,12 @@
 local requiredSpeed = 40
 
 -- ScoreTrackerPlugin
-local msg = ac.OnlineEvent({
-    ac.StructItem.key("driftScoreEnd"),
-    Score = ac.StructItem.int64(),
-    Multiplier = ac.StructItem.int32(),
-    Car = ac.StructItem.string(64),
-})
+-- local msg = ac.OnlineEvent({
+    -- ac.StructItem.key("driftScoreEnd"),
+    -- Score = ac.StructItem.int64(),
+    -- Multiplier = ac.StructItem.int32(),
+    -- Car = ac.StructItem.string(64),
+-- })
 
 
 
@@ -85,11 +85,11 @@ function script.update(dt)
     end
     
     if player.speedKmh < requiredSpeed and slidingMult < 1 then
-        if dangerouslySlowTimer > 3 then
+        if dangerouslySlowTimer > 2 then
             if totalScore > highestScore then
                 highestScore = math.floor(totalScore)                
                 ac.sendChatMessage("scored a new personal best: " .. math.floor(totalScore) .. " points.")
-                msg{ Score = totalScore, Multiplier = highestCombo, Car = ac.getCarName(0) }
+                --msg{ Score = totalScore, Multiplier = highestCombo, Car = ac.getCarName(0) }
             end
             if totalScore > 0 then
                 lastScore = math.floor(totalScore)
